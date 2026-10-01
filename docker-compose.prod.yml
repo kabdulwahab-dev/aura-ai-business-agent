@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: ./application/server
+      target: runner
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./application/client
+      target: runner
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      AURA_API_URL: http://api:4000
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped

@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "Aura Client",
+      "path": "application/client"
+    },
+    {
+      "name": "Aura Server",
+      "path": "application/server"
+    },
+    {
+      "name": "Specs",
+      "path": "specs"
+    }
+  ],
+  "settings": {}
+}

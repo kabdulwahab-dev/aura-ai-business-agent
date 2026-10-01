@@ -444,6 +444,142 @@ A request belonging to Company A must never retrieve Company B's documents or bu
 * Docker Compose
 * GitHub Actions
 
+---
+
+# 📁 Project Structure
+
+```text
+.
+├── application
+│   ├── client      # AURA-CLIENT: Next.js frontend
+│   └── server      # AURA-SERVER: Express API
+├── specs           # Product specs and phase plans
+├── docker-compose.dev.yml
+├── docker-compose.prod.yml
+└── .env.example
+```
+
+Planning docs:
+
+* [Product overview](specs/AURA_AI_Business_Knowledge_Operations_Agent_Plan.md)
+* [Frontend phase plan](specs/frontend-phase-plan.md)
+* [Backend phase plan](specs/backend-phase-plan.md)
+* [Parallel delivery roadmap](specs/parallel-delivery-roadmap.md)
+
+---
+
+# 🚀 Running The Project
+
+## Prerequisites
+
+Install:
+
+* Node.js
+* npm
+* Docker Desktop
+* Docker Compose
+
+On WSL2, enable Docker Desktop WSL integration for this distro before running Docker commands.
+
+## Environment
+
+Create a local environment file from the example:
+
+```zsh
+cp .env.example .env
+```
+
+Current local defaults:
+
+```env
+NODE_ENV=development
+PORT=4000
+AURA_API_URL=http://localhost:4000
+NEXT_PUBLIC_API_URL=http://localhost:4000
+```
+
+## Run With Docker For Development
+
+From the workspace root:
+
+```zsh
+docker compose -f docker-compose.dev.yml up --build
+```
+
+This starts:
+
+* Frontend: `http://localhost:3000`
+* Backend API: `http://localhost:4000`
+
+The development Compose file mounts local source files into the containers so frontend and backend changes reload during development.
+
+Stop the containers:
+
+```zsh
+docker compose -f docker-compose.dev.yml down
+```
+
+## Run With Docker For Production-Style Build
+
+From the workspace root:
+
+```zsh
+docker compose -f docker-compose.prod.yml up --build
+```
+
+This builds production images for:
+
+* Next.js standalone frontend container
+* Express API container
+
+Stop the production-style containers:
+
+```zsh
+docker compose -f docker-compose.prod.yml down
+```
+
+## Run Without Docker
+
+Install and start the backend:
+
+```zsh
+cd application/server
+npm install
+npm run dev
+```
+
+In another terminal, install and start the frontend:
+
+```zsh
+cd application/client
+npm install
+npm run dev
+```
+
+Local URLs:
+
+* Frontend: `http://localhost:3000`
+* Backend API: `http://localhost:4000`
+
+## Build Checks
+
+Backend:
+
+```zsh
+cd application/server
+npm run build
+```
+
+Frontend:
+
+```zsh
+cd application/client
+npm run build
+npm run lint
+```
+
+---
+
 ## Storage
 
 Development:
